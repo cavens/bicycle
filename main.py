@@ -9,15 +9,21 @@ allcustomers = []
 affordablebikes = {}
 
 
-#Set bicycles, shop, customers
-bikeone = Bicycle("Bikeone",10,100)
-biketwo = Bicycle("Biketwo",20,200)
-bikethree = Bicycle("Bikethree",30,300)
-bikefour = Bicycle("Bikefour",40,400)
-bikefive = Bicycle("Bikefive",50,500)
-bikesix = Bicycle("Bikesix",60,600)
+#Set bicycles, shop, customers, wheels, frames
+wheelone = Wheels("Wheelone",10,10)
+wheeltwo = Wheels("Wheeltwo",20,20)
+wheelthree = Wheels("Wheelthree",30,30)
+wheels = [wheelone, wheeltwo, wheelthree]
 
-bikes = {bikeone:2, biketwo:4, bikethree:8, bikefour:4, bikefive:3, bikesix:5}
+framealu = Frames("Aluminum",10,10)
+framecar = Frames("Carbon",20,20)
+framesteel = Frames("Steel",30,30)
+frames = [framealu, framecar, framesteel]
+
+manufacturerone = Manufacturer("Manufacturerone",1.20)
+manufacturertwo = Manufacturer("Manufacturertwo",1.20)
+
+bikes = {manufacturerone.modelone:2, manufacturerone.modeltwo:4, manufacturerone.modelthree:8, manufacturertwo.modelone:4, manufacturertwo.modeltwo:3, manufacturertwo.modelthree:5}
 bikeshop = BikeShops("Bikeshop",bikes,1.20)
 
 customerone = Customers("Customerone",200)
@@ -54,7 +60,6 @@ print_inventory()
 def purchase_bikes():
 	"""This function does this"""
 	#bikeshop.sell(bikeone, customerone)
-	
 	for customer in allcustomers:
 		randombike = random.choice(affordablebikes[customer.name])
 		bikeshop.sell(randombike, customer)
@@ -63,7 +68,17 @@ def purchase_bikes():
 purchase_bikes()
 
 
+#Print inventory and total profit
 def inventory_profit():
+	"""This function does this"""
 	print bikeshop.inventory, bikeshop.profit
 
 inventory_profit()
+
+
+
+
+
+
+
+
