@@ -36,11 +36,11 @@ class Bicycle(object):
 
 class Manufacturer(object):
 	"""This class does this"""
-	def __init__(self,name,margin):
-		global wheels
-		global frames
+	def __init__(self,name,margin,wheels,frames):
 		self.name = name
 		self.margin = margin
+		self.wheels = wheels
+		self.frames = frames
 
 		self.modelone = Bicycle("%s %s" %(self.name, "Modelone"), random.choice(wheels), random.choice(frames), self.name)
 		self.modeltwo = Bicycle("%s %s" %(self.name, "Modeltwo"), random.choice(wheels), random.choice(frames), self.name)
@@ -54,21 +54,20 @@ class Manufacturer(object):
 
 class BikeShops(object):
 	"""This class does this"""
-	manufacturer_inventory = {}
-	for obj in gc.get_objects():
-			if isinstance(obj, Manufacturer):
-				manufacturer_inventory += dict(obj.inventory.items())
-
 	def __init__(self,name,bikes,margin):
 		self.name = name
 		self.margin = margin
-		self.price = 0 #Can be discarted?
 		self.inventory = {}
 		self.profit = 0
+		self.manufacturer_inventory = {}	
+		for obj in gc.get_objects():
+				if isinstance(obj, Manufacturer):
+					self.manufacturer_inventory = dict((obj.inventory.items())+(self.manufacturer_inventory.items()))
 
 		for bike in bikes:
-			price = manufacturer_inventory[bike]*self.margin
+			price = self.manufacturer_inventory[bike]*self.margin
 			self.inventory[bike]={"price": price, "amount": bikes[bike]}
+
 
 	def sell(self,bike,customer):
 		self.profit += int(self.inventory[bike]["price"]-(self.inventory[bike]["price"]/self.margin))

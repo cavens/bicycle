@@ -20,8 +20,8 @@ framecar = Frames("Carbon",20,20)
 framesteel = Frames("Steel",30,30)
 frames = [framealu, framecar, framesteel]
 
-manufacturerone = Manufacturer("Manufacturerone",1.20)
-manufacturertwo = Manufacturer("Manufacturertwo",1.20)
+manufacturerone = Manufacturer("Manufacturerone",1.20,wheels,frames)
+manufacturertwo = Manufacturer("Manufacturertwo",1.20,wheels,frames)
 
 bikes = {manufacturerone.modelone:2, manufacturerone.modeltwo:4, manufacturerone.modelthree:8, manufacturertwo.modelone:4, manufacturertwo.modeltwo:3, manufacturertwo.modelthree:5}
 bikeshop = BikeShops("Bikeshop",bikes,1.20)
@@ -63,7 +63,7 @@ def purchase_bikes():
 	for customer in allcustomers:
 		randombike = random.choice(affordablebikes[customer.name])
 		bikeshop.sell(randombike, customer)
-		print randombike, bikeshop.inventory[randombike]["price"], customer.fund
+		print randombike.name, bikeshop.inventory[randombike]["price"], customer.fund
 
 purchase_bikes()
 
@@ -71,7 +71,10 @@ purchase_bikes()
 #Print inventory and total profit
 def inventory_profit():
 	"""This function does this"""
-	print bikeshop.inventory, bikeshop.profit
+	inventory_clean = {} #Sneaky trick to clean up the inventory print
+	for key in bikeshop.inventory:
+		inventory_clean[key.name]=bikeshop.inventory[key]
+	print inventory_clean, bikeshop.profit
 
 inventory_profit()
 
